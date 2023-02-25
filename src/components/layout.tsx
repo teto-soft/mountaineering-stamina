@@ -1,32 +1,45 @@
 import * as React from 'react'
-import { Link } from 'gatsby'
-import { container, navLinks, navLinkItem, navLinkText, heading } from './layout.module.css'
+import { container, navLinks, navLinkItem, navLinkText, heading, siteTitle } from './layout.module.css'
+import { graphql, Link, useStaticQuery } from 'gatsby'
 
 interface LayoutProps {
   pageTitle: string
   children: React.ReactNode
 }
 
-const Layout = ({ pageTitle, children }: LayoutProps) => (
-  <div className={container}>
-    <nav>
-      <ul className={navLinks}>
-        <li className={navLinkItem}>
-          <Link to='/' className={navLinkText}>
-            Home
-          </Link>
-        </li>
-        <li className={navLinkItem}>
-          <Link to='/about' className={navLinkText}>
-            About
-          </Link>
-        </li>
-      </ul>
-    </nav>
-    <main>
-      <h1 className={heading}>{pageTitle}</h1> {children}
-    </main>
-  </div>
-)
+const Layout = ({ pageTitle, children }: LayoutProps) => {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
+  return (
+    <div className={container}>
+      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
+      <nav>
+        <ul className={navLinks}>
+          <li className={navLinkItem}>
+            <Link to='/' className={navLinkText}>
+              Home
+            </Link>
+          </li>
+          <li className={navLinkItem}>
+            <Link to='/about' className={navLinkText}>
+              About
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <main>
+        <h1 className={heading}>{pageTitle}</h1> {children}
+      </main>
+    </div>
+  )
+}
 
 export default Layout
