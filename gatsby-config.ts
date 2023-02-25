@@ -10,6 +10,8 @@ const config: GatsbyConfig = {
   },
   graphqlTypegen: true,
   plugins: [
+    'gatsby-plugin-image',
+    'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-plugin-eslint',
       options: {
