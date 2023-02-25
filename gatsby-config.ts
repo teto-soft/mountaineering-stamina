@@ -1,4 +1,7 @@
 import type { GatsbyConfig } from 'gatsby'
+import * as path from 'path'
+
+const gatsbyRequiredRules = path.join(process.cwd(), 'node_modules', 'gatsby', 'dist', 'utils', 'eslint-rules')
 
 const config: GatsbyConfig = {
   siteMetadata: {
@@ -10,13 +13,11 @@ const config: GatsbyConfig = {
     {
       resolve: 'gatsby-plugin-eslint',
       options: {
-        test: /\.js$|\.jsx$|\.ts$|\.tsx$/,
-        exclude: /(node_modules|.cache|public)/,
+        rulePaths: [gatsbyRequiredRules],
+        exclude: ['node_modules', '.cache', 'public'],
         stages: ['develop'],
-        options: {
-          emitWarning: true,
-          failOnError: false,
-        },
+        emitWarning: true,
+        failOnError: false,
       },
     },
   ],
