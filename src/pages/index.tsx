@@ -1,20 +1,36 @@
-import { StaticImage } from 'gatsby-plugin-image'
-import * as React from 'react'
-import Layout from '../components/Layout'
+import { graphql, Link, PageProps } from 'gatsby'
+import React from 'react'
 import Seo from '../components/Seo'
 
-const IndexPage = () => (
-  <main>
-    <Layout pageTitle='Home Page'>
-      <p>{"I'm making this by following the Gatsby Tutorial."}</p>
-      <StaticImage
-        alt='Clifford, a reddish-brown pitbull, posing on a couch and looking stoically at the camera'
-        src={'../images/clifford.jpg'}
-      />
-    </Layout>
-  </main>
-)
+export default function IndexPage({ data }: PageProps<Queries.IndexPageQuery>) {
+  const { allMicrocmsBlogs } = data
+  return (
+    <main>
+      <h1>TOPページ</h1>
+      <h2>最新記事</h2>
+      <ul>
+        {allMicrocmsBlogs.nodes.map((node) => (
+          <li key={node.blogsId}>
+            <Link to={`/blogs/${node.blogsId}/`}>{node.title}</Link>
+          </li>
+        ))}
+      </ul>
+      <Link to='/blogs/'>もっとみる</Link>
+    </main>
+  )
+}
+
+export const query = graphql`
+  query IndexPage {
+    allMicrocmsBlogs(limit: 3, sort: { publishedAt: DESC }) {
+      nodes {
+        blogsId
+        title
+        publishedAt
+        revisedAt
+      }
+    }
+  }
+`
 
 export const Head = () => <Seo title='Home Page' />
-
-export default IndexPage
