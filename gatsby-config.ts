@@ -14,6 +14,7 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sharp',
     'gatsby-plugin-mdx',
     'gatsby-transformer-sharp',
+    'gatsby-source-microcms',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
