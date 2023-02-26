@@ -1,7 +1,7 @@
 import { graphql, PageProps } from 'gatsby'
 import * as React from 'react'
-import Layout from '../components/Layout'
-import Seo from '../components/Seo'
+import Layout from '../../components/Layout'
+import Seo from '../../components/Seo'
 
 const BlogPage = ({ data }: PageProps<Queries.BlogPageQuery>) => (
   <Layout pageTitle='My Blog Posts'>
