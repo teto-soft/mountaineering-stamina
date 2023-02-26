@@ -8,19 +8,20 @@ interface LayoutProps {
 }
 
 const Layout = ({ pageTitle, children }: LayoutProps) => {
-  const data = useStaticQuery(graphql`
-    query {
+  const query = graphql`
+    query Layout {
       site {
         siteMetadata {
           title
         }
       }
     }
-  `)
+  `
+  const data = useStaticQuery<Queries.LayoutQuery>(query)
 
   return (
     <div className={container}>
-      <header className={siteTitle}>{data.site.siteMetadata.title}</header>
+      <header className={siteTitle}>{data.site?.siteMetadata?.title}</header>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
