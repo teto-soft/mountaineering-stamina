@@ -1,5 +1,7 @@
 import type { GatsbyConfig } from 'gatsby'
 import * as path from 'path'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 const gatsbyRequiredRules = path.join(process.cwd(), 'node_modules', 'gatsby', 'dist', 'utils', 'eslint-rules')
 
@@ -14,12 +16,19 @@ const config: GatsbyConfig = {
     'gatsby-plugin-sharp',
     'gatsby-plugin-mdx',
     'gatsby-transformer-sharp',
-    'gatsby-source-microcms',
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: 'gatsby-source-microcms',
       options: {
-        name: `blog`,
-        path: `${__dirname}/blog`,
+        apiKey: process.env.MICROCMS_API_KEY,
+        serviceId: process.env.MICROCMS_SERVICE_ID,
+        apis: [
+          {
+            endpoint: 'blogs',
+          },
+          {
+            endpoint: 'categories',
+          },
+        ],
       },
     },
     {
